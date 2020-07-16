@@ -26,7 +26,7 @@
                 axios
                     .post('http://shelter/api/add/animal', fd)
                     .then(response => {
-                        console.log(response)
+                        console.log(response.data)
                     });
             }
         }
