@@ -1,7 +1,8 @@
 <template>
     <section>
         <h2>Добавление нового животного</h2>
-        <form>
+        <p v-if="insert_status">{{insert_status}}</p>
+        <form @submit.prevent="addAnimal">
             <div>
                 <label>
                     Категория:
@@ -28,12 +29,12 @@
             </div>
             <div>
                 <label>Документы:
-                    <input type="checkbox" value="true" v-model="passport">
+                    <input type="checkbox" value="1" v-model="passport">
                 </label>
             </div>
             <div>
                 <label>Прививки:
-                    <input type="checkbox" value="true" v-model="vaccination">
+                    <input type="checkbox" value="1" v-model="vaccination">
                 </label>
             </div>
             <input type="submit" value="Добавить">
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: "NewAnimal",
         data: function() {
@@ -50,8 +52,30 @@
                 animal_name: '',
                 description: '',
                 age: 0,
-                passport: false,
-                vaccination: false
+                passport: 0,
+                vaccination: 0,
+                insert_status: ''
+
+            }
+        },
+        methods: {
+            addAnimal: function () {
+                // обработчик submit
+                const formData = new FormData();
+                formData.append('animal_name', this.animal_name);
+                formData.append('description', this.description);
+                formData.append('age', this.age);
+                formData.append('passport', this.passport);
+                formData.append('vaccination', this.vaccination);
+                formData.append('id_category', this.id_category);
+
+                axios
+                    .post('http://shelter-master/api/add/animal', formData)
+                    .then(response => {
+                        alert(response.data);
+                        this.insert_status = response.data;
+                    });
+
             }
         }
     }
