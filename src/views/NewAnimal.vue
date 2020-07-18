@@ -29,12 +29,12 @@
             </div>
             <div>
                 <label>Документы:
-                    <input type="checkbox" value="1" v-model="passport">
+                    <input type="checkbox" :value="1" v-model="passport">
                 </label>
             </div>
             <div>
                 <label>Прививки:
-                    <input type="checkbox" value="1" v-model="vaccination">
+                    <input type="checkbox" :value="1" v-model="vaccination">
                 </label>
             </div>
             <input type="submit" value="Добавить">
